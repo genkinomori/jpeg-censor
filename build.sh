@@ -3,6 +3,8 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 pushd $SCRIPT_DIR > /dev/null
 
+mkdir -p ./build
+
 echo "Building for linux..."
 cd cmd/decoder
 GOOS=linux GOARCH=amd64 go build

@@ -24,13 +24,14 @@ type Task struct {
 	Output string
 }
 
-func addFilenameSuffix(filename, suffix, forceExt string) string {
+func addFilenamePrefix(filename, prefix, forceExt string) string {
+	dir, filename := filepath.Split(filename)
 	ext := filepath.Ext(filename)
 	base := strings.TrimSuffix(filename, ext)
 	if forceExt != "" {
 		ext = forceExt
 	}
-	return base + suffix + ext
+	return dir + prefix + base + ext
 }
 
 func reportError(err error) {
@@ -117,7 +118,7 @@ func main() {
 
 	for _, task := range tasks {
 		if task.Output == "" {
-			task.Output = addFilenameSuffix(task.Input, "_r", ".jpg")
+			task.Output = addFilenamePrefix(task.Input, "restored_", ".jpg")
 		}
 
 		im := readImage(task.Input)

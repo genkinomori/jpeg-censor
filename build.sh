@@ -23,7 +23,7 @@ cd ../..
 mv cmd/decoder/decoder.exe ./build/decoder-windows-amd64.exe
 mv cmd/encoder/encoder.exe ./build/encoder-windows-amd64.exe
 
-echo "Building for macOS..."
+echo "Building for macOS (Intel)..."
 cd cmd/decoder
 GOOS=darwin GOARCH=amd64 go build
 cd ../../cmd/encoder
@@ -31,5 +31,14 @@ GOOS=darwin GOARCH=amd64 go build
 cd ../..
 mv cmd/decoder/decoder ./build/decoder-darwin-amd64
 mv cmd/encoder/encoder ./build/encoder-darwin-amd64
+
+echo "Building for macOS (Apple silicon)..."
+cd cmd/decoder
+GOOS=darwin GOARCH=arm64 go build
+cd ../../cmd/encoder
+GOOS=darwin GOARCH=arm64 go build
+cd ../..
+mv cmd/decoder/decoder ./build/decoder-darwin-apple-silicon
+mv cmd/encoder/encoder ./build/encoder-darwin-apple-silicon
 
 popd > /dev/null

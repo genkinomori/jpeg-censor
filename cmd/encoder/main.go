@@ -107,12 +107,17 @@ func main() {
 
 	tasks := make([]*Task, 0)
 	if *flagInput == "" {
-		files, err := os.ReadDir(".")
+		execu, err := os.Executable()
+		dir_to_read := "."
+		if err == nil {
+			dir_to_read = filepath.Dir(execu)
+		}
+		files, err := os.ReadDir(dir_to_read)
 		if err != nil {
 			reportError(err)
 		}
 		for _, file := range files {
-			filename := file.Name()
+			filename := filepath.Join(dir_to_read, file.Name())
 			ext := strings.ToLower(filepath.Ext(filename))
 			if ext != ".jpg" && ext != ".jpeg" && ext != ".png" {
 				continue
